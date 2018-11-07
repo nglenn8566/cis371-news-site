@@ -2,6 +2,14 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
+      <!-- <div class="dropdown"> <span>Regions</span>
+      <div class="dropdown-content">
+        <router-link to="/region/Grand-Rapids">Grand Rapids Area</router-link>
+        <router-link to="/region/Lansing">Lansing Area</router-link>
+        <router-link to="/region/Kalamazoo">Kalamazoo Area</router-link>
+        <router-link to="/region/Detroit">Detroit Area</router-link>
+      </div>
+      </div> | -->
       <router-link to="/about">About</router-link> |
       <router-link to="/tech">Tech</router-link> |
       <router-link to="/entertainment">Entertainment</router-link> |
@@ -50,4 +58,21 @@ button{
     color: white;
     background-color:  #49ff01; 
   }
+
+// .dropdown{
+//   position: relative;
+//   display: inline-block;
+// }
+// .dropdown-content{
+//   display: none;
+//   position: absolute;
+//   background-color: #f9f9f9;
+//   min-width: 160px;
+//   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+//   padding: 12px 16px;
+//   z-index: -1; 
+// }
+// .dropdown:hover .dropdown-content{
+//   display: block;
+// }
 </style>
