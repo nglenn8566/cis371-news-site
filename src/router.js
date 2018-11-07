@@ -24,5 +24,6 @@ export default new Router({
       name: 'tech',
       component: () => import(/* webpackChunkName: "about" */ './views/Tech.vue')
     }
-  ]
+  ],
+  mode: 'history'
 })
