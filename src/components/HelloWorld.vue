@@ -1,16 +1,14 @@
 <template>
-  <div >
+  <div>
 
 
-    <!-- <p id="articles">{{articles[0]}}</p> -->
-    <!-- if v-bind:key="the key of the " -->
+ 
     <b-container>
     <b-row class="justify-content-md-center">
 
       <div v-for="(value,key) in articles" v-bind:key="key">
         <div class="d-flex align-items-stretch ">
         <div v-for="(value2,key2) in value" v-bind:key="key2">
-         <!-- <p>{{key}}</p> -->
 
            <b-col class="d-flex align-items-stretch mx-autp">
            <b-card :title="value2.title"
@@ -26,15 +24,7 @@
             <b-button variant="info">Read More</b-button>
           </b-card>
           </b-col>
-          <!-- <b-col>
-            <div class="card" style="width: 18rem;">
-              <div class="card-body">
-                <h5 class="card-title">{{value.title}}</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
-          </b-col> -->
+         
         </div>
         </div>
       </div>
@@ -95,7 +85,6 @@ export default {
           'apiKey=ee1f76f3df2e4e4796b69628a5398c46';
 
       var req = new Request(url);
-      // var out;
       fetch(req)
         .then((response) => {
           //this creates the promise
