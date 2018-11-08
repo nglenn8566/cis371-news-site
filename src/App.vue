@@ -8,9 +8,7 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      <!-- <li class="nav-item active">
-        <a class="nav-link" herf="/home">Home <span class="sr-only">(current)</span></a>
-      </li> -->
+ <!-- change everthing to use router-link for SPA --> 
       <li class="nav-item">
         <a class="nav-link" href="/tech">Technology</a>
       </li>
@@ -28,7 +26,7 @@
           Regional News
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="/news/Grand-Rapids">Grand Rapids</a>
+          <a class="dropdown-item"><router-link to="/news/Grand-Rapids">Grand Rapids</router-link></a>
           <a class="dropdown-item" href="/news/Detroit">Detroit</a>
           <a class="dropdown-item" href="/news/Lansing">Lansing</a>
         </div>

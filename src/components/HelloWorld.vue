@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <!-- <h1>{{ msg }}</h1> -->
 
 
     <p>
@@ -8,6 +8,9 @@
       check out the
       <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
     </p>
+
+
+    <p id="articles">{{articles}}</p>
     <!-- <h3>Installed CLI Plugins</h3>
     <ul>
       <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
@@ -33,26 +36,75 @@
 </template>
 
 <script>
+// ****************************************************************
+// DO NOT DELETE THIS SECTION
 //API key for newai.org is contained below. DO NOT DELETE
 // ee1f76f3df2e4e4796b69628a5398c46
+//*****************************************************************
 
-var url = 'https://newsapi.org/v2/everything?' +
-          'q=Grand Rapids&' +
+// var out;
+
+// new Vue({
+//     el:"#articles",
+//     data:{
+//        articles: [0]
+//     },
+//       computed:{
+//       recentNews(){
+//       var url = 'https://newsapi.org/v2/everything?' +
+//           'q=Michigan&' +
+//           'from=2018-11-07&' +
+//           'sortBy=popularity&' +
+//           'apiKey=ee1f76f3df2e4e4796b69628a5398c46';
+
+//       var req = new Request(url);
+//       fetch(req)
+//         .then(function(response) {
+//           //this creates the promise
+//           return response.json();
+//         }).then(function(jsonData){
+//         //this gets the data from the promise and puts it into the articles prop
+//           return jsonData.articles
+          
+//         })
+//     }
+//       }
+//  })
+
+
+export default {
+  name: 'recent-news',
+  data(){
+    return {
+      loading: false,
+      articles: [],
+      error: null
+    }
+  },
+  async created(){
+    this.recentNews()
+    console.log(this.articles)
+  },
+  methods:{
+    recentNews(){
+      var url = 'https://newsapi.org/v2/everything?' +
+          'q=Michigan&' +
           'from=2018-11-07&' +
           'sortBy=popularity&' +
           'apiKey=ee1f76f3df2e4e4796b69628a5398c46';
 
-var req = new Request(url);
-
-fetch(req)
-    .then(function(response) {
-        console.log(response.json());
-        console.log(response)
-    })
-export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
+      var req = new Request(url);
+      // var out;
+      fetch(req)
+        .then((response) => {
+          //this creates the promise
+          return response.json();
+        }).then((jsonData)=>{
+        //this gets the data from the promise and puts it into the articles data item
+        this.articles = jsonData.articles
+          
+        })
+    }
   }
 }
 </script>
