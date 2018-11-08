@@ -4,6 +4,9 @@ import router from './router'
 import Paginate from 'vuejs-paginate'
 import 'bootstrap' 
 import 'bootstrap/dist/css/bootstrap.min.css'
+import BootstrapVue from 'bootstrap-vue'
+
+Vue.use(BootstrapVue)
 
 Vue.config.productionTip = false
 Vue.component('paginate', Paginate)

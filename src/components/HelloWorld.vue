@@ -1,16 +1,45 @@
 <template>
-  <div class="hello">
-    <!-- <h1>{{ msg }}</h1> -->
+  <div >
 
 
-    <p>
-      For guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
+    <!-- <p id="articles">{{articles[0]}}</p> -->
+    <!-- if v-bind:key="the key of the " -->
+    <b-container>
+    <b-row class="justify-content-md-center">
 
+      <div v-for="(value,key) in articles" v-bind:key="key">
+        <div class="d-flex align-items-stretch ">
+        <div v-for="(value2,key2) in value" v-bind:key="key2">
+         <!-- <p>{{key}}</p> -->
 
-    <p id="articles">{{articles}}</p>
+           <b-col class="d-flex align-items-stretch mx-autp">
+           <b-card :title="value2.title"
+            :img-src="value2.urlToImage"
+            img-alt="Image"
+            img-top
+            tag="article"
+            style="max-width: 20rem;"
+            class="mb-2">
+            <p class="card-text">
+            {{value2.description}}
+            </p>
+            <b-button variant="info">Read More</b-button>
+          </b-card>
+          </b-col>
+          <!-- <b-col>
+            <div class="card" style="width: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title">{{value.title}}</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+          </b-col> -->
+        </div>
+        </div>
+      </div>
+      </b-row>
+    </b-container>
     <!-- <h3>Installed CLI Plugins</h3>
     <ul>
       <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
@@ -36,41 +65,13 @@
 </template>
 
 <script>
+import _ from 'lodash'
 // ****************************************************************
 // DO NOT DELETE THIS SECTION
 //API key for newai.org is contained below. DO NOT DELETE
 // ee1f76f3df2e4e4796b69628a5398c46
 //*****************************************************************
-
-// var out;
-
-// new Vue({
-//     el:"#articles",
-//     data:{
-//        articles: [0]
-//     },
-//       computed:{
-//       recentNews(){
-//       var url = 'https://newsapi.org/v2/everything?' +
-//           'q=Michigan&' +
-//           'from=2018-11-07&' +
-//           'sortBy=popularity&' +
-//           'apiKey=ee1f76f3df2e4e4796b69628a5398c46';
-
-//       var req = new Request(url);
-//       fetch(req)
-//         .then(function(response) {
-//           //this creates the promise
-//           return response.json();
-//         }).then(function(jsonData){
-//         //this gets the data from the promise and puts it into the articles prop
-//           return jsonData.articles
-          
-//         })
-//     }
-//       }
-//  })
-
+    
 
 export default {
   name: 'recent-news',
@@ -101,7 +102,8 @@ export default {
           return response.json();
         }).then((jsonData)=>{
         //this gets the data from the promise and puts it into the articles data item
-        this.articles = jsonData.articles
+        this.articles = _.chunk(jsonData.articles, 3)
+        console.log(this.articles)
           
         })
     }
