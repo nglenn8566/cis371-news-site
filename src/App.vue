@@ -1,47 +1,50 @@
 <template>
 
   <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="/">Michigan News</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
- <!-- change everthing to use router-link for SPA --> 
-      <li class="nav-item">
-        <a class="nav-link" href="/tech">Technology</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/entertainment">Entertainment</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/sports">Sports</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/politics">Politics</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Regional News
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item"><router-link to="/news/Grand-Rapids">Grand Rapids</router-link></a>
-          <a class="dropdown-item" href="/news/Detroit">Detroit</a>
-          <a class="dropdown-item" href="/news/Lansing">Lansing</a>
-        </div>
-      </li>
-    </ul>
-  </div>
-</nav>
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/tech">Tech</router-link> |
-      <router-link to="/entertainment">Entertainment</router-link> |
-      <router-link to="/weather">Weather</router-link> |
+    <b-navbar toggleable="md" type="dark" variant="info">
 
-    </div> -->
+  <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+
+  <b-navbar-brand to="/">Michigan News</b-navbar-brand>
+
+  <b-collapse is-nav id="nav_collapse">
+
+    <b-navbar-nav>
+      <b-nav-item  to="/tech">Technology</b-nav-item>
+      <b-nav-item to="/entertainment">Entertainment</b-nav-item>
+      <b-nav-item to="/sports">Sports</b-nav-item>
+      <b-nav-item to="/politics">Politics</b-nav-item>
+       <b-nav-item-dropdown text="Regional News" right>
+        <b-dropdown-item to="/news/GrandRapids">Grand Rapids</b-dropdown-item>
+        <b-dropdown-item to="/news/Lansing">Lansing</b-dropdown-item>
+        <b-dropdown-item to="/news/Holland">Holland</b-dropdown-item>
+        <b-dropdown-item to="/news/Flint">Flint</b-dropdown-item>
+        <b-dropdown-item to="/news/Detroit">Detroit</b-dropdown-item>
+      </b-nav-item-dropdown>
+    </b-navbar-nav>
+
+    <!-- Right aligned nav items -->
+    <b-navbar-nav class="ml-auto">
+
+      <b-nav-form>
+        <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Search"/>
+        <b-button size="sm" class="my-2 my-sm-0" type="submit" variant="dark">Search</b-button>
+      </b-nav-form>
+
+
+
+      <b-nav-item-dropdown right>
+        <!-- Using button-content slot -->
+        <template slot="button-content">
+          <em>User</em>
+        </template>
+        <b-dropdown-item ><router-link to="/profile">Profile</router-link></b-dropdown-item>
+        <b-dropdown-item><router-link to="/logout">Signout</router-link></b-dropdown-item>
+      </b-nav-item-dropdown>
+    </b-navbar-nav>
+
+  </b-collapse>
+</b-navbar>
     <router-view/>
   </div>
 </template>
@@ -54,51 +57,15 @@
   text-align: center;
   color: #2c3e50;
 }
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-
-.container{
-  margin-left: 20px;
-  margin-right: 20px;
-}
-
-.row{
-// rows for the file
-}
-
-button{
-  border-radius: 4px;
-  border-style: solid;
-  
-
-}
-  .btn-success{
-    color: white;
-    background-color:  #49ff01; 
-  }
-
-// .dropdown{
-//   position: relative;
-//   display: inline-block;
+// #nav {
+//   padding: 30px;
+//   a {
+//     font-weight: bold;
+//     color: #2c3e50;
+//     &.router-link-exact-active {
+//       color: #42b983;
+//     }
+//   }
 // }
-// .dropdown-content{
-//   display: none;
-//   position: absolute;
-//   background-color: #f9f9f9;
-//   min-width: 160px;
-//   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-//   padding: 12px 16px;
-//   z-index: -1; 
-// }
-// .dropdown:hover .dropdown-content{
-//   display: block;
-// }
+
 </style>
