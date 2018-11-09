@@ -35,7 +35,7 @@
     </b-container>
   </div>
 </template>
-
+<script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
 <script>
 import _ from 'lodash'
 // ****************************************************************
@@ -44,6 +44,18 @@ import _ from 'lodash'
 // ee1f76f3df2e4e4796b69628a5398c46
 //*****************************************************************
     
+
+
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCZQaBpxbIzlFQdTIupobI2jQYydx1ZOQ8",
+    authDomain: "michigan-news-cis371.firebaseapp.com",
+    databaseURL: "https://michigan-news-cis371.firebaseio.com",
+    projectId: "michigan-news-cis371",
+    storageBucket: "michigan-news-cis371.appspot.com",
+    messagingSenderId: "32986651741"
+  };
+  firebase.initializeApp(config);
 
 export default {
   name: 'recent-news',
