@@ -1,16 +1,12 @@
 <template>
-  <div>
-
-
- 
+  <div> 
     <b-container>
-    <b-row class="justify-content-md-center">
 
       <div v-for="(value,key) in articles" v-bind:key="key">
-        <div class="d-flex align-items-stretch mb-4">
+    <b-row class="justify-content-md-center d-flex align-items-stretch justify-content-center pb-2">
         <div v-for="(value2,key2) in value" v-bind:key="key2">
 
-           <b-col class="d-flex align-items-stretch h-100">
+           <b-col class=" h-100 mb-4 pb-2 justify-content-center">
            <b-card :title="value2.title"
             :img-src="value2.urlToImage"
             img-alt="Image"
@@ -29,15 +25,24 @@
           </b-col>
          
         </div>
-        </div>
-      </div>
       </b-row>
+      </div>
     </b-container>
   </div>
 </template>
-<script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
 <script>
 import _ from 'lodash'
+import * as firebase from 'firebase';
+
+var config = {
+  apiKey: "AIzaSyCZQaBpxbIzlFQdTIupobI2jQYydx1ZOQ8",
+  authDomain: "michigan-news-cis371.firebaseapp.com",
+  databaseURL: "https://michigan-news-cis371.firebaseio.com",
+  projectId: "michigan-news-cis371",
+  storageBucket: "michigan-news-cis371.appspot.com",
+  messagingSenderId: "32986651741"
+};
+firebase.initializeApp(config);
 // ****************************************************************
 // DO NOT DELETE THIS SECTION
 //API key for newai.org is contained below. DO NOT DELETE
@@ -45,17 +50,6 @@ import _ from 'lodash'
 //*****************************************************************
     
 
-
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyCZQaBpxbIzlFQdTIupobI2jQYydx1ZOQ8",
-    authDomain: "michigan-news-cis371.firebaseapp.com",
-    databaseURL: "https://michigan-news-cis371.firebaseio.com",
-    projectId: "michigan-news-cis371",
-    storageBucket: "michigan-news-cis371.appspot.com",
-    messagingSenderId: "32986651741"
-  };
-  firebase.initializeApp(config);
 
 export default {
   name: 'recent-news',
@@ -71,9 +65,14 @@ export default {
   },
   methods:{
     recentNews(){
+      var dateObj = new Date();
+      var month = dateObj.getUTCMonth() + 1; //months from 1-12
+      var day = dateObj.getUTCDate();
+      var year = dateObj.getUTCFullYear();
+      var dateQuery = year+'-'+month+'-'+day;
       var url = 'https://newsapi.org/v2/everything?' +
           'q=Michigan&' +
-          'from=2018-11-07&' + 'pageSize=9&'+
+          'from='+dateQuery+'&' + 'pageSize=9&'+
           'sortBy=popularity&' +
           'apiKey=ee1f76f3df2e4e4796b69628a5398c46';
 
@@ -110,6 +109,8 @@ a {
   color: #42b983;
 }
 
-.cardBtn{
+.card{
+  border: none !important;
 }
+
 </style>

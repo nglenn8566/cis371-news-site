@@ -5,7 +5,7 @@
 
   <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-  <b-navbar-brand to="/">Michigan News</b-navbar-brand>
+  <b-navbar-brand to="/" class="mx-auto">Michigan News</b-navbar-brand>
 
   <b-collapse is-nav id="nav_collapse">
 
@@ -33,13 +33,28 @@
 
 
 
-      <b-nav-item-dropdown right>
-        <!-- Using button-content slot -->
-        <template slot="button-content">
-          <em>User</em>
+      <b-nav-item-dropdown size="lg" right >
+        <template slot="button-content" size="lg" id="test" v-if="userStatus()">
+          <em>{{userInfo.username}}</em>
         </template>
-        <b-dropdown-item ><router-link to="/profile">Profile</router-link></b-dropdown-item>
-        <b-dropdown-item><router-link to="/logout">Signout</router-link></b-dropdown-item>
+        <template slot="button-content" size="lg" id="test" v-if="!userStatus()">
+            <em>Login</em>
+        </template>
+        <div v-if="userStatus()">
+  <b-dropdown-item to="/profile">Profile</b-dropdown-item>
+        <b-dropdown-item v-on:click="logOut()">Signout</b-dropdown-item>
+          </div>
+
+        <div v-if="userStatus() == false">
+          <b-form class="w-atuo">
+            <b-form-input class="dropForm m-2" v-model="email" type="text" placeholder="Email"></b-form-input>
+           <b-form-input class="dropForm m-2" v-model="password" type="password" placeholder="Password"></b-form-input>
+           <b-alert variant="danger" v-show="invalidCreds" >Invalid email or password.</b-alert>
+
+            <b-button type="button" variant="success" class="form-control" v-on:click="loginUser()">Login</b-button>
+          </b-form>
+        </div>
+      
       </b-nav-item-dropdown>
     </b-navbar-nav>
 
@@ -48,6 +63,67 @@
     <router-view/>
   </div>
 </template>
+<script>
+import * as firebase from 'firebase';
+
+// ****************************************************************
+// DO NOT DELETE THIS SECTION
+//API key for newai.org is contained below. DO NOT DELETE
+// ee1f76f3df2e4e4796b69628a5398c46
+//*****************************************************************
+
+
+
+export default {
+  name: 'recent-news',
+  data(){
+    return {
+      loading: false,
+      error: null,
+      email: '',
+      password: '',
+      loginValid: false,
+      userInfo: {},
+      invalidCreds: false
+    }
+  },
+  created(){
+    firebase.auth().onAuthStateChanged(user =>{
+     if(user!= null){
+       this.userInfo.email = user.email
+       var atLoc = user.email.indexOf('@')
+       this.userInfo.username = user.email.substring(0,atLoc)
+       this.loginValid = true;
+       this.invalidCreds = false;
+     }
+     else{
+       this.invalidCreds = false;
+       this.loginValid = false;
+       this.user = {};
+     }
+    })
+  },
+  methods:{
+    loginUser(){ 
+        firebase.auth().signInWithEmailAndPassword(this.email, this.password).catch( error => {
+          if(error.code == 'auth/wrong-password' || error.code=='auth/user-not-found' || error.code =='auth/invalid-email' ){
+            this.invalidCreds = true;
+            this.loginValid = false;
+          }
+
+          
+    });
+  },
+  userStatus(){
+    return this.loginValid
+  },
+  logOut(){
+    firebase.auth().signOut();
+  }
+  }
+}
+
+</script>
 
 <style lang="scss">
 #app {
@@ -55,17 +131,17 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: black;
+  // color: #2c3e50;
+  background-color: rgb(27, 27, 27);
 }
-// #nav {
-//   padding: 30px;
-//   a {
-//     font-weight: bold;
-//     color: #2c3e50;
-//     &.router-link-exact-active {
-//       color: #42b983;
-//     }
-//   }
-// }
+
+.dropForm{
+  width: 250px !important;
+}
+
+.card{
+  border: none !important;
+}
 
 </style>
