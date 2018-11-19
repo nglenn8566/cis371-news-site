@@ -14,13 +14,13 @@
       <b-nav-item to="/entertainment">Entertainment</b-nav-item>
       <b-nav-item to="/sports">Sports</b-nav-item>
       <b-nav-item to="/politics">Politics</b-nav-item>
-       <b-nav-item-dropdown text="Regional News" right>
+       <!-- <b-nav-item-dropdown text="Regional News" right>
         <b-dropdown-item to="/news/GrandRapids">Grand Rapids</b-dropdown-item>
         <b-dropdown-item to="/news/Lansing">Lansing</b-dropdown-item>
         <b-dropdown-item to="/news/Holland">Holland</b-dropdown-item>
         <b-dropdown-item to="/news/Flint">Flint</b-dropdown-item>
         <b-dropdown-item to="/news/Detroit">Detroit</b-dropdown-item>
-      </b-nav-item-dropdown>
+      </b-nav-item-dropdown> -->
     </b-navbar-nav>
 
     <!-- Right aligned nav items -->

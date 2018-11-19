@@ -10,7 +10,7 @@
 import Home from '@/components/HomeComponent.vue'
 
 export default {
-  name: 'tech',
+  name: 'home',
   components: {
     Home
   }

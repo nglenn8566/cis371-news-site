@@ -19,7 +19,7 @@
             </p>
             <div class="text-center">
               <!--  click event that routes to the articles page needed here -->
-            <b-button class="cardBtn " variant="info">Read More</b-button>
+            <b-button class="cardBtn " variant="info" target="_blank" :href="value2.url"> Read More</b-button>
             </div>
           </b-card>
           </b-col>
@@ -33,6 +33,7 @@
 <script>
 import _ from 'lodash'
 import * as firebase from 'firebase';
+import router from '../router'
 
 var config = {
   apiKey: "AIzaSyCZQaBpxbIzlFQdTIupobI2jQYydx1ZOQ8",
@@ -57,7 +58,8 @@ export default {
     return {
       loading: false,
       articles: [],
-      error: null
+      error: null,
+      fullArtArray:[]
     }
   },
   async created(){
@@ -70,8 +72,8 @@ export default {
       var day = dateObj.getUTCDate();
       var year = dateObj.getUTCFullYear();
       var dateQuery = year+'-'+month+'-'+day;
-      var url = 'https://newsapi.org/v2/everything?' +
-          'q=Michigan&' +
+      var url = 'https://newsapi.org/v2/everything?language=en&' +
+          'q="Michigan"AND("detroit"OR"Grand Rapids"OR"Lansing")&' +
           'from='+dateQuery+'&' + 'pageSize=9&'+
           'sortBy=popularity&' +
           'apiKey=ee1f76f3df2e4e4796b69628a5398c46';
@@ -83,10 +85,18 @@ export default {
           return response.json();
         }).then((jsonData)=>{
         //this gets the data from the promise and puts it into the articles data item
-        // with the data that comes in post it to firebase
+        // with the data that comes in and posts the articles to firebase
+        for(var item of jsonData.articles){
+          firebase.database().ref().child("topArticles").push().set(item)
+
+        }
+         
         this.articles = _.chunk(jsonData.articles, 3)
           
         })
+    },
+    viewArticle(artUrl){
+      router.push({name:'articleView', query:{url:artUrl.toString()}})
     }
   }
 }
@@ -94,6 +104,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.cardBtn{
+  color: white !important;
+}
 h3 {
   margin: 40px 0 0;
 }
