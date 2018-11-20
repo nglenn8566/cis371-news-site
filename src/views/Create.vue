@@ -1,18 +1,18 @@
 <template>
   <div class="home">
   
-    <ArticleView class="pt-5" />
+    <create-component class="pt-5" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import ArticleView from '@/components/ArticleComponent.vue'
+import CreateComponent from '@/components/CreateComponent.vue'
 
 export default {
-  name: 'articleView',
+  name: 'create',
   components: {
-    ArticleView
+    CreateComponent
   }
 }
 </script>

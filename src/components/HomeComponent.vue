@@ -51,7 +51,6 @@ firebase.initializeApp(config);
 //*****************************************************************
     
 
-
 export default {
   name: 'recent-news',
   data(){
@@ -67,6 +66,7 @@ export default {
   },
   methods:{
     recentNews(){
+      
       var dateObj = new Date();
       var month = dateObj.getUTCMonth() + 1; //months from 1-12
       var day = dateObj.getUTCDate();

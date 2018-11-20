@@ -5,6 +5,7 @@ import Home from './views/Home.vue'
 import About from './views/About.vue'
 import Tech from './views/Tech.vue'
 import ArticleView from './views/ArticleView.vue'
+import CreateView from './views/Create.vue'
 
 Vue.use(Router)
 
@@ -29,6 +30,17 @@ export default new Router({
       path: '/article/view',
       name: 'articleView',
       component: ArticleView
+    },
+    {
+      path: '/create',
+      component: CreateView,
+      meta:{
+        requiresAuth: true
+      }
+    },
+    {
+      path: '*',
+      redirect: '/'
     }
   ],
   mode: 'history'

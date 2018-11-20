@@ -25,7 +25,9 @@
 
     <!-- Right aligned nav items -->
     <b-navbar-nav class="ml-auto">
-
+      <b-nav-form v-if="userStatus()">
+      <b-button size="sm" class="mr-sm-2" variant="success" to="/create">Create Article</b-button>
+      </b-nav-form>
       <b-nav-form>
         <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Search"/>
         <b-button size="sm" class="my-2 my-sm-0" type="submit" variant="dark">Search</b-button>
@@ -130,10 +132,13 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: black;
   // color: #2c3e50;
   background-color: rgb(27, 27, 27);
+}
+html{
+  background-color: rgb(27, 27, 27);
+
 }
 
 .dropForm{
