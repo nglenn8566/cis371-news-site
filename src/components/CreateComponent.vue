@@ -5,7 +5,14 @@
     <b-row class="  mb-2">
         <b-col class="text-white" >
             <h2 >Create New Article</h2>
-           <b-form class="m-5">
+           <b-form class="m-5 pb-3">
+              <b-alert :show="error"
+                  dismissible
+                  variant="danger"
+                 class="sticky-top">
+                  <p>Please fill out all required fields.</p>
+
+                </b-alert>
                 <b-form-group id="titleInputGroup"
                     label="Article Title:"
                     label-for="titleInput"
@@ -41,9 +48,13 @@
                       :rows="7"
                       placeholder="Enter the body of the article">
                 </b-form-textarea>
-                </b-form-group>    
-                  <b-form-file v-model="file" :state="Boolean(file)" placeholder="Choose a file..."></b-form-file>
-                    <div class="mt-3">Selected file: {{file && file.name}}</div>    
+                </b-form-group >  
+                 <b-form-group id="fileInputGroup"
+                    label="Image:"
+                    label-for="fileInput">
+                  <b-form-file id="fileInput" v-model="file" :state="Boolean(file)" accept="image/*" placeholder="Choose a file..." ></b-form-file>
+                    <div class="mt-3 mb-5">Selected file: {{file && file.name}}</div>    
+                 </b-form-group>
             </b-form>
             <b-button class="w-100 fixed-bottom" size="lg" variant="success" v-on:click="submitArticle()">Submit Article</b-button>
           </b-col>
@@ -53,15 +64,9 @@
   </div>
 </template>
 <script>
-// import _ from 'lodash'
-// import * as firebase from 'firebase';
-
-
-// ****************************************************************
-// DO NOT DELETE THIS SECTION
-//API key for newai.org is contained below. DO NOT DELETE
-// ee1f76f3df2e4e4796b69628a5398c46
-//*****************************************************************
+import * as firebase from 'firebase';
+import router from '../router'
+const moment = require('moment')
     
 
 export default {
@@ -79,13 +84,36 @@ export default {
       },
       file: null,
       error: null,
+      imgUpError: null
     }
   },
-  async created(){
- 
-  },
   methods:{
+    submitArticle(){
+      if(this.article.title == '' || this.article.description == '' || this.article.content =='' || this.file == null ){
+        this.error = true;
 
+      }
+      else{
+        var fireEmail = firebase.auth().currentUser.email
+        var atLoc = fireEmail.indexOf('@')
+        this.article.author = fireEmail.substring(0, atLoc)
+        this.article.publishedAt =  moment().utc().format()
+        var imgRef = firebase.storage().ref().child(this.file.name)
+        imgRef.put(this.file)
+        this.article.urlToImage = 'firebase/'+this.file.name;
+        var userArtRef = firebase.database().ref().child('userArticles')
+        userArtRef.push().set(this.article).then(function(snapshot){
+         if(snapshot){
+           alert('There was a problem creating the article. Please Try Again')
+         }
+         else{
+          router.go('/')
+          alert('Success! Returning to the homepage.')
+         }
+        })
+      }
+
+    }
   }
 }
 </script>

@@ -8,6 +8,7 @@ import BootstrapVue from 'bootstrap-vue'
 import * as firebase from 'firebase';
 
 Vue.use(BootstrapVue)
+Vue.use(require('vue-moment'));
 
 Vue.config.productionTip = false
 Vue.component('paginate', Paginate)
