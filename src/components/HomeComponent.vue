@@ -161,7 +161,185 @@ export default {
     },
     onSlideEnd () {
       this.sliding = false
+    },
+    //start marker incase of mess up
+    technologyNews(){
+      
+      var dateObj = new Date();
+      var month = dateObj.getUTCMonth() + 1; //months from 1-12
+      var day = dateObj.getUTCDate();
+      var year = dateObj.getUTCFullYear();
+      var dateQuery = year+'-'+month+'-'+day;
+      var url = 'https://newsapi.org/v2/sources?category=technology&language=en&' +
+          'q="Michigan"AND("detroit"OR"Grand Rapids"OR"Lansing")&' +
+          'from='+dateQuery+'&' + 'pageSize=9&'+
+          'sortBy=popularity&' +
+          'apiKey=ee1f76f3df2e4e4796b69628a5398c46';
+
+      var req = new Request(url);
+      fetch(req)
+        .then((response) => {
+          //this creates the promise
+          return response.json();
+        }).then((jsonData)=>{
+        //this gets the data from the promise and puts it into the articles data item
+        // with the data that comes in and posts the articles to firebase
+
+        var lastTopUpdate;
+        var timeDif;
+        var currentMoment = moment();
+        //this is a template for all pages to use that limit the frequencies in which articles can be posted 
+       firebase.database().ref().child("timeUpdated").limitToFirst(1).once('value',function(snapshot){
+          lastTopUpdate = moment(snapshot.val().technologyArticles)
+          timeDif = currentMoment.diff(lastTopUpdate,'hours',true)
+          if(timeDif >= 6){
+            for(var item of jsonData.articles){
+              firebase.database().ref().child("technologyArticles").push().set(item)
+              var updates ={};
+              updates['/timeUpdated/technologyArticles'] = moment().utc().format()
+              firebase.database().ref().update(updates)
+
+            }
+          }
+        })
+   
+        this.articles = _.chunk(jsonData.articles, 3)
+          
+        })
+    },
+    entertainmentNews(){
+      
+      var dateObj = new Date();
+      var month = dateObj.getUTCMonth() + 1; //months from 1-12
+      var day = dateObj.getUTCDate();
+      var year = dateObj.getUTCFullYear();
+      var dateQuery = year+'-'+month+'-'+day;
+      var url = 'https://newsapi.org/v2/sources?category=entertainment&language=en&' +
+          'q="Michigan"AND("detroit"OR"Grand Rapids"OR"Lansing")&' +
+          'from='+dateQuery+'&' + 'pageSize=9&'+
+          'sortBy=popularity&' +
+          'apiKey=ee1f76f3df2e4e4796b69628a5398c46';
+
+      var req = new Request(url);
+      fetch(req)
+        .then((response) => {
+          //this creates the promise
+          return response.json();
+        }).then((jsonData)=>{
+        //this gets the data from the promise and puts it into the articles data item
+        // with the data that comes in and posts the articles to firebase
+
+        var lastTopUpdate;
+        var timeDif;
+        var currentMoment = moment();
+        //this is a template for all pages to use that limit the frequencies in which articles can be posted 
+       firebase.database().ref().child("timeUpdated").limitToFirst(1).once('value',function(snapshot){
+          lastTopUpdate = moment(snapshot.val().entertainmentArticles)
+          timeDif = currentMoment.diff(lastTopUpdate,'hours',true)
+          if(timeDif >= 6){
+            for(var item of jsonData.articles){
+              firebase.database().ref().child("entertainmentArticles").push().set(item)
+              var updates ={};
+              updates['/timeUpdated/entertainmentArticles'] = moment().utc().format()
+              firebase.database().ref().update(updates)
+
+            }
+          }
+        })
+   
+        this.articles = _.chunk(jsonData.articles, 3)
+          
+        })
+    },
+    sportsNews(){
+      
+      var dateObj = new Date();
+      var month = dateObj.getUTCMonth() + 1; //months from 1-12
+      var day = dateObj.getUTCDate();
+      var year = dateObj.getUTCFullYear();
+      var dateQuery = year+'-'+month+'-'+day;
+      var url = 'https://newsapi.org/v2/sources?category=sports&language=en&' +
+          'q="Michigan"AND("detroit"OR"Grand Rapids"OR"Lansing")&' +
+          'from='+dateQuery+'&' + 'pageSize=9&'+
+          'sortBy=popularity&' +
+          'apiKey=ee1f76f3df2e4e4796b69628a5398c46';
+
+      var req = new Request(url);
+      fetch(req)
+        .then((response) => {
+          //this creates the promise
+          return response.json();
+        }).then((jsonData)=>{
+        //this gets the data from the promise and puts it into the articles data item
+        // with the data that comes in and posts the articles to firebase
+
+        var lastTopUpdate;
+        var timeDif;
+        var currentMoment = moment();
+        //this is a template for all pages to use that limit the frequencies in which articles can be posted 
+       firebase.database().ref().child("timeUpdated").limitToFirst(1).once('value',function(snapshot){
+          lastTopUpdate = moment(snapshot.val().sportsArticles)
+          timeDif = currentMoment.diff(lastTopUpdate,'hours',true)
+          if(timeDif >= 6){
+            for(var item of jsonData.articles){
+              firebase.database().ref().child("sportsArticles").push().set(item)
+              var updates ={};
+              updates['/timeUpdated/sportsArticles'] = moment().utc().format()
+              firebase.database().ref().update(updates)
+
+            }
+          }
+        })
+   
+        this.articles = _.chunk(jsonData.articles, 3)
+          
+        })
+    },
+    politicsNews(){
+      
+      var dateObj = new Date();
+      var month = dateObj.getUTCMonth() + 1; //months from 1-12
+      var day = dateObj.getUTCDate();
+      var year = dateObj.getUTCFullYear();
+      var dateQuery = year+'-'+month+'-'+day;
+      var url = 'https://newsapi.org/v2/everything?q=politics&language=en&' +
+          'q="Michigan"AND("detroit"OR"Grand Rapids"OR"Lansing")&' +
+          'from='+dateQuery+'&' + 'pageSize=9&'+
+          'sortBy=popularity&' +
+          'apiKey=ee1f76f3df2e4e4796b69628a5398c46';
+
+      var req = new Request(url);
+      fetch(req)
+        .then((response) => {
+          //this creates the promise
+          return response.json();
+        }).then((jsonData)=>{
+        //this gets the data from the promise and puts it into the articles data item
+        // with the data that comes in and posts the articles to firebase
+
+        var lastTopUpdate;
+        var timeDif;
+        var currentMoment = moment();
+        //this is a template for all pages to use that limit the frequencies in which articles can be posted 
+       firebase.database().ref().child("timeUpdated").limitToFirst(1).once('value',function(snapshot){
+          lastTopUpdate = moment(snapshot.val().politicsArticles)
+          timeDif = currentMoment.diff(lastTopUpdate,'hours',true)
+          if(timeDif >= 6){
+            for(var item of jsonData.articles){
+              firebase.database().ref().child("politicsArticles").push().set(item)
+              var updates ={};
+              updates['/timeUpdated/politicsArticles'] = moment().utc().format()
+              firebase.database().ref().update(updates)
+
+            }
+          }
+        })
+   
+        this.articles = _.chunk(jsonData.articles, 3)
+          
+        })
     }
+    //end marker in case of messup
   }
 }
 </script>
