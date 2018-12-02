@@ -41,7 +41,7 @@ export default new Router({
     },
     {
       path: '/NewUser',
-      name: 'NewUser',
+      name: 'newUser',
       component: NewUser
     },
     {

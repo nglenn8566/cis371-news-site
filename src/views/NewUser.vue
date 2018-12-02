@@ -10,7 +10,7 @@
 import NewUser from '@/components/NewUserComponent.vue'
 
 export default {
-  name: 'NewUser',
+  name: 'newUser',
   components: {
     NewUser
   }
