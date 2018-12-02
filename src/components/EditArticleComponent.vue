@@ -97,9 +97,9 @@ export default {
     },
     async uploadArticle(articleOut){
         var updates ={}
-        updates['/userArticles/'+this.$route.params.uid] = this.article
+        updates['/userArticles/'+this.$route.params.uid] = articleOut
         console.log(updates)
-       var userArtRef = firebase.database().ref().update(updates).then(function(snapshot){
+         firebase.database().ref().update(updates).then(function(snapshot){
     
          if(snapshot){
            alert('There was a problem updating the article. Please Try Again')
@@ -112,8 +112,7 @@ export default {
     },
      getArticles(){
         this.userInfo = firebase.auth().currentUser;
-        var atLoc = this.userInfo.email.indexOf('@')
-        var authSub = this.userInfo.email.substring(0,atLoc)
+
         this.articles =[]
         firebase.database().ref().child('userArticles').orderByKey().equalTo(this.$route.params.uid).on("value", (snap)=>{
         const snapval = snap.val()

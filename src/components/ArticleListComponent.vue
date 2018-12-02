@@ -30,8 +30,6 @@
 <script>
 // import _ from 'lodash'
 import * as firebase from 'firebase';
-import router from '../router'
-const moment = require('moment')
 
 
 // ****************************************************************
