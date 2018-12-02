@@ -6,6 +6,8 @@ import About from './views/About.vue'
 import Tech from './views/Tech.vue'
 import ArticleView from './views/ArticleView.vue'
 import CreateView from './views/Create.vue'
+import EditArticle from './views/EditArticle.vue'
+import ArticleList from './views/ArticleList.vue'
 
 Vue.use(Router)
 
@@ -30,6 +32,22 @@ export default new Router({
       path: '/article/:uid',
       name: 'articleView',
       component: ArticleView
+    },
+    {
+      path: '/edit/article/:uid',
+      name: 'editArticle',
+      component: EditArticle,
+      meta:{
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/view/articles',
+      name: 'articleList',
+      component: ArticleList,
+      meta:{
+        requiresAuth: true
+      }
     },
     {
       path: '/create',

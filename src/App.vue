@@ -28,10 +28,6 @@
       <b-nav-form v-if="userStatus()">
       <b-button size="sm" class="mr-sm-2" variant="success" to="/create">Create Article</b-button>
       </b-nav-form>
-      <b-nav-form>
-        <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Search"/>
-        <b-button size="sm" class="my-2 my-sm-0" type="submit" variant="dark">Search</b-button>
-      </b-nav-form>
 
 
 
@@ -43,7 +39,7 @@
             <em>Login</em>
         </template>
         <div v-if="userStatus()">
-         <b-dropdown-item to="/edit/articles">Edit Articles</b-dropdown-item>
+         <b-dropdown-item to="/view/articles">Edit Articles</b-dropdown-item>
         <b-dropdown-item to="/profile">Profile</b-dropdown-item>
         <b-dropdown-item v-on:click="logOut()">Signout</b-dropdown-item>
           </div>
@@ -121,6 +117,7 @@ export default {
     return this.loginValid
   },
   logOut(){
+    this.loginValid = false;
     firebase.auth().signOut();
   }
   }

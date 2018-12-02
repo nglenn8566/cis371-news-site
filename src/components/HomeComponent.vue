@@ -28,7 +28,7 @@
       </b-row>
       </div>
 
-       <h2 class="text-center white">Top Headlines</h2>
+       <h2 class="text-center white">New Articles</h2>
       <div v-for="(value3,key3) in userArticles" v-bind:key="'A'+key3">
     <b-row class="justify-content-md-center d-flex align-items-stretch justify-content-center pb-2">
       <div v-for="(value4,key4) in value3" v-bind:key="'A'+key4">
@@ -59,7 +59,6 @@
 <script>
 import _ from 'lodash'
 import * as firebase from 'firebase';
-import router from '../router'
 const moment = require('moment')
 
 var config = {
@@ -87,6 +86,7 @@ export default {
       userArticles:[],
       error: null,
       fullArtArray:[],
+      articlesGot: false,
       slide: 0,
       sliding: null
     }
@@ -94,6 +94,30 @@ export default {
   async created(){
     this.recentNews()
     this.getUserArticles()
+    firebase.database().ref('userArticles').on('child_added', snapshot =>{
+    var flatArticles = _.flatten(this.userArticles)
+        if(this.articlesGot){
+          console.log('adding new article')
+          firebase.database().ref('userArticles').child(snapshot.key).on('value', snap =>{
+            console.log(snap)
+            flatArticles.push(snap.val())
+            this.userArticles = _.chunk(flatArticles, 3)
+            console.log(this.userArticles)
+          })
+        
+        }
+    })
+    firebase.database().ref('userArticles').on('child_removed', snapshot =>{
+    console.log(snapshot)
+    console.log('FIREBASE ACTION IS OCCURING')
+    var flatArticles = _.flatten(this.userArticles)
+    var tempArticle
+    for(var t in flatArticles){
+      console.log(t)
+      tempArticle = _.filter(flatArticles, function(arti){return arti.uid != snapshot.key})
+    }
+    this.userArticles = _.chunk(tempArticle, 3)
+    })
   },
   methods:{
     recentNews(){
@@ -146,22 +170,13 @@ export default {
         for(var g in snapval){
           var gOut = snapval[g]
           gOut.uid = g
-          // gOut.urlToImage = imgHold
           this.userArticles.push(gOut)
+          this.articlesGot = true
         }
         this.userArticles = _.chunk(this.userArticles, 3)
 
       })
     },
-    viewArticle(artUrl){
-      router.push({name:'articleView', query:{url:artUrl.toString()}})
-    },
-    onSlideStart () {
-      this.sliding = true
-    },
-    onSlideEnd () {
-      this.sliding = false
-    }
   }
 }
 </script>
