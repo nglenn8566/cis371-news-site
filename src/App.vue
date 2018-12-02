@@ -55,6 +55,7 @@
            <b-alert variant="danger" v-show="invalidCreds" >Invalid email or password.</b-alert>
 
             <b-button type="button" variant="success" class="form-control" v-on:click="loginUser()">Login</b-button>
+            <b-button type="button" variant="info" class="form-control navMarg" to="/NewUser">New User</b-button>          
           </b-form>
         </div>
       
@@ -148,6 +149,10 @@ html{
 
 .card{
   border: none !important;
+}
+
+.navMarg{
+  margin-top: 4px;
 }
 
 </style>
