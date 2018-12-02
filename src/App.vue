@@ -55,7 +55,7 @@
            <b-alert variant="danger" v-show="invalidCreds" >Invalid email or password.</b-alert>
 
             <b-button type="button" variant="success" class="form-control" v-on:click="loginUser()">Login</b-button>
-            <b-button type="button" variant="info" class="form-control navMarg" to="/NewUser">New User</b-button>          
+            <b-button type="button" variant="info" class="form-control navMarg" v-on:click="createUser()">New User</b-button>          
           </b-form>
         </div>
       
@@ -113,9 +113,7 @@ export default {
           if(error.code == 'auth/wrong-password' || error.code=='auth/user-not-found' || error.code =='auth/invalid-email' ){
             this.invalidCreds = true;
             this.loginValid = false;
-          }
-
-          
+          }    
     });
   },
   userStatus(){
@@ -123,6 +121,14 @@ export default {
   },
   logOut(){
     firebase.auth().signOut();
+  },
+  createUser(){
+    firebase.auth().createUserWithEmailAndPassword(this.email, this.password).catch(function(error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log(errorCode);
+            console.log(errorMessage);
+        });
   }
   }
 }

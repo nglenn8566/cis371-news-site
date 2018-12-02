@@ -6,7 +6,6 @@ import About from './views/About.vue'
 import Tech from './views/Tech.vue'
 import ArticleView from './views/ArticleView.vue'
 import CreateView from './views/Create.vue'
-import NewUser from './views/NewUser.vue'
 
 Vue.use(Router)
 
@@ -38,11 +37,6 @@ export default new Router({
       meta:{
         requiresAuth: true
       }
-    },
-    {
-      path: '/NewUser',
-      name: 'newUser',
-      component: NewUser
     },
     {
       path: '*',
