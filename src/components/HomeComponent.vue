@@ -1,7 +1,7 @@
 <template>
-  <div> 
-    <b-container>
-
+<div>
+<b-container>
+  <h2 class="text-center white">Top Headlines</h2>
       <div v-for="(value,key) in articles" v-bind:key="key">
     <b-row class="justify-content-md-center d-flex align-items-stretch justify-content-center pb-2">
         <div v-for="(value2,key2) in value" v-bind:key="key2">
@@ -27,6 +27,32 @@
         </div>
       </b-row>
       </div>
+
+       <h2 class="text-center white">Top Headlines</h2>
+      <div v-for="(value3,key3) in userArticles" v-bind:key="'A'+key3">
+    <b-row class="justify-content-md-center d-flex align-items-stretch justify-content-center pb-2">
+      <div v-for="(value4,key4) in value3" v-bind:key="'A'+key4">
+
+           <b-col class=" h-100 mb-4 pb-2 justify-content-center">
+           <b-card :title="value4.title"
+            :img-src="'https://firebasestorage.googleapis.com/v0/b/michigan-news-cis371.appspot.com/o/'+value4.urlToImage+'?alt=media&token=9736c27e-33c8-4dc7-8420-539163898c6b'"
+            img-alt="Image"
+            img-top
+            tag="article"
+            style="max-width: 20rem;"
+            class="mb-2 h-100">
+            <p class="card-text">
+            {{value4.description}}
+            </p>
+            <div class="text-center">
+              <!--  click event that routes to the articles page needed here -->
+            <b-button class="cardBtn " variant="info"  :to="'/article/'+value4.uid"> Read More</b-button>
+            </div>
+          </b-card>
+          </b-col>
+         </div>
+      </b-row>
+      </div>
     </b-container>
   </div>
 </template>
@@ -34,6 +60,7 @@
 import _ from 'lodash'
 import * as firebase from 'firebase';
 import router from '../router'
+const moment = require('moment')
 
 var config = {
   apiKey: "AIzaSyCZQaBpxbIzlFQdTIupobI2jQYydx1ZOQ8",
@@ -57,12 +84,16 @@ export default {
     return {
       loading: false,
       articles: [],
+      userArticles:[],
       error: null,
-      fullArtArray:[]
+      fullArtArray:[],
+      slide: 0,
+      sliding: null
     }
   },
   async created(){
     this.recentNews()
+    this.getUserArticles()
   },
   methods:{
     recentNews(){
@@ -86,17 +117,50 @@ export default {
         }).then((jsonData)=>{
         //this gets the data from the promise and puts it into the articles data item
         // with the data that comes in and posts the articles to firebase
-        for(var item of jsonData.articles){
-          firebase.database().ref().child("topArticles").push().set(item)
 
-        }
-         
+        var lastTopUpdate;
+        var timeDif;
+        var currentMoment = moment();
+        //this is a template for all pages to use that limit the frequencies in which articles can be posted 
+       firebase.database().ref().child("timeUpdated").limitToFirst(1).once('value',function(snapshot){
+          lastTopUpdate = moment(snapshot.val().topArticles)
+          timeDif = currentMoment.diff(lastTopUpdate,'hours',true)
+          if(timeDif >= 6){
+            for(var item of jsonData.articles){
+              firebase.database().ref().child("topArticles").push().set(item)
+              var updates ={};
+              updates['/timeUpdated/topArticles'] = moment().utc().format()
+              firebase.database().ref().update(updates)
+
+            }
+          }
+        })
+   
         this.articles = _.chunk(jsonData.articles, 3)
           
         })
     },
+    getUserArticles(){
+      firebase.database().ref().child("userArticles").limitToLast(10).once('value', (snap)=>{
+        const snapval = snap.val()
+        for(var g in snapval){
+          var gOut = snapval[g]
+          gOut.uid = g
+          // gOut.urlToImage = imgHold
+          this.userArticles.push(gOut)
+        }
+        this.userArticles = _.chunk(this.userArticles, 3)
+
+      })
+    },
     viewArticle(artUrl){
       router.push({name:'articleView', query:{url:artUrl.toString()}})
+    },
+    onSlideStart () {
+      this.sliding = true
+    },
+    onSlideEnd () {
+      this.sliding = false
     }
   }
 }
@@ -106,6 +170,9 @@ export default {
 <style scoped lang="scss">
 .cardBtn{
   color: white !important;
+}
+h2{
+  color: white;
 }
 h3 {
   margin: 40px 0 0;

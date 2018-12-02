@@ -88,7 +88,7 @@ export default {
     }
   },
   methods:{
-    submitArticle(){
+   async submitArticle(){
       if(this.article.title == '' || this.article.description == '' || this.article.content =='' || this.file == null ){
         this.error = true;
 
@@ -98,11 +98,25 @@ export default {
         var atLoc = fireEmail.indexOf('@')
         this.article.author = fireEmail.substring(0, atLoc)
         this.article.publishedAt =  moment().utc().format()
-        var imgRef = firebase.storage().ref().child(this.file.name)
-        imgRef.put(this.file)
-        this.article.urlToImage = 'firebase/'+this.file.name;
-        var userArtRef = firebase.database().ref().child('userArticles')
-        userArtRef.push().set(this.article).then(function(snapshot){
+        firebase.storage().ref().child(this.file.name).put(this.file)
+        var that = this
+        that.article.urlToImage = that.file.name
+
+        firebase.storage().ref().child(that.file.name).getDownloadURL().then( async function(url){
+            console.log(url) 
+          }).catch(function(error){
+            console.log(error)
+            return error
+          })
+
+         that.uploadArticle(that.article)
+ 
+      }
+
+    },
+    async uploadArticle(articleOut){
+       var userArtRef = firebase.database().ref().child('userArticles')
+        userArtRef.push().set(articleOut).then(function(snapshot){
          if(snapshot){
            alert('There was a problem creating the article. Please Try Again')
          }
@@ -111,9 +125,8 @@ export default {
           alert('Success! Returning to the homepage.')
          }
         })
-      }
+    },
 
-    }
   }
 }
 </script>

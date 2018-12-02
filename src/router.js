@@ -27,7 +27,7 @@ export default new Router({
       component: Tech
     },
     {
-      path: '/article/view',
+      path: '/article/:uid',
       name: 'articleView',
       component: ArticleView
     },

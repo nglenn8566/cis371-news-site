@@ -4,9 +4,19 @@
 
     <b-row class="justify-content-md-center d-flex align-items-stretch justify-content-center pb-2">
            <b-col class="  w-100 text-white">
-            <!-- <img :src="article.urlToImage">            -->
+             <h1 class="text-center text-uppercase">{{article.title}}</h1>
+            <b-img class="mb-3"  center fluid :src="'https://firebasestorage.googleapis.com/v0/b/michigan-news-cis371.appspot.com/o/'+article.urlToImage+'?alt=media&token=9736c27e-33c8-4dc7-8420-539163898c6b'"/>           
+            <b-jumbotron bg-variant="dark" text-variant="white" border-variant="white">
 
-            <template>{{articles.content}}</template>
+          <template slot="lead">
+             <p class="text-uppercase" >By: {{article.author}}</p>
+             
+          </template>
+          <p>{{article.publishedAt}}</p>
+          <hr class="my-4">
+          <p v-html="article.content">
+            </p>
+          </b-jumbotron>
           </b-col>
          
       </b-row>
@@ -16,6 +26,7 @@
 <script>
 // import _ from 'lodash'
 import * as firebase from 'firebase';
+const moment = require('moment')
 
 
 // ****************************************************************
@@ -30,7 +41,7 @@ export default {
   data(){
     return {
       loading: false,
-      articles: {},
+      article: {},
       error: null,
       articleUrl: this.$route.query.url
     }
@@ -40,13 +51,11 @@ export default {
   },
   methods:{
     getArticle(){
-      var rootRef = firebase.database().ref("topArticles")
-      rootRef.orderByChild('url').equalTo(this.articleUrl).on("value", (snap) =>{
-        var snapval= snap.val();
-        for(var value in snapval){
-          this.articles = snapval[value]
-        }
+     firebase.database().ref("userArticles").child(this.$route.params.uid).on("value", (snap)=>{
+        this.article = snap.val()
+        this.article.publishedAt = moment(this.article.publishedAt).format("dddd, MMMM Do YYYY, h:mm:ss a")
       })
+
       //use firbase to get the article
     }
   }

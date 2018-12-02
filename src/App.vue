@@ -43,7 +43,8 @@
             <em>Login</em>
         </template>
         <div v-if="userStatus()">
-  <b-dropdown-item to="/profile">Profile</b-dropdown-item>
+         <b-dropdown-item to="/edit/articles">Edit Articles</b-dropdown-item>
+        <b-dropdown-item to="/profile">Profile</b-dropdown-item>
         <b-dropdown-item v-on:click="logOut()">Signout</b-dropdown-item>
           </div>
 
