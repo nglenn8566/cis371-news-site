@@ -13,7 +13,7 @@
       <b-nav-item  to="/tech">Technology</b-nav-item>
       <b-nav-item to="/entertainment">Entertainment</b-nav-item>
       <b-nav-item to="/sports">Sports</b-nav-item>
-      <b-nav-item to="/business">business</b-nav-item>
+      <b-nav-item to="/business">Business</b-nav-item>
      
     </b-navbar-nav>
 

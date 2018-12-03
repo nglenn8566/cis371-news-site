@@ -8,6 +8,7 @@ import ArticleView from './views/ArticleView.vue'
 import CreateView from './views/Create.vue'
 import EditArticle from './views/EditArticle.vue'
 import ArticleList from './views/ArticleList.vue'
+import Business from './views/Business.vue'
 
 Vue.use(Router)
 
@@ -27,6 +28,11 @@ export default new Router({
       path: '/tech',
       name: 'tech',
       component: Tech
+    },
+    {
+      path: '/business',
+      name: 'business',
+      component: Business
     },
     {
       path: '/article/:uid',
