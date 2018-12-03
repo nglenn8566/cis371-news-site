@@ -97,27 +97,21 @@ export default {
     firebase.database().ref('userArticles').on('child_added', snapshot =>{
     var flatArticles = _.flatten(this.userArticles)
         if(this.articlesGot){
-          console.log('adding new article')
           firebase.database().ref('userArticles').child(snapshot.key).on('value', snap =>{
-            console.log(snap)
             flatArticles.push(snap.val())
             this.userArticles = _.chunk(flatArticles, 3)
-            console.log(this.userArticles)
           })
         
         }
     })
     firebase.database().ref('userArticles').on('child_removed', snapshot =>{
-    console.log(snapshot)
-    console.log('FIREBASE ACTION IS OCCURING')
     var flatArticles = _.flatten(this.userArticles)
     var tempArticle
-    for(var t in flatArticles){
-      console.log(t)
       tempArticle = _.filter(flatArticles, function(arti){return arti.uid != snapshot.key})
-    }
+    
     this.userArticles = _.chunk(tempArticle, 3)
     })
+    
   },
   methods:{
     recentNews(){
