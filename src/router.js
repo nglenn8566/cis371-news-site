@@ -6,6 +6,7 @@ import About from './views/About.vue'
 import Tech from './views/Tech.vue'
 import ArticleView from './views/ArticleView.vue'
 import CreateView from './views/Create.vue'
+import Enter from './views/Entertainment.vue'
 
 Vue.use(Router)
 
@@ -25,6 +26,11 @@ export default new Router({
       path: '/tech',
       name: 'tech',
       component: Tech
+    },
+    {
+      path: '/enter',
+      name: 'enter',
+      component: Enter
     },
     {
       path: '/article/:uid',
