@@ -1,7 +1,7 @@
 <template>
   <div class="home">
   
-    <BusinessView class="pt-5" />
+    <BusinessView/>
   </div>
 </template>
 

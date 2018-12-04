@@ -1,7 +1,7 @@
 <template>
   <div class="enter">
     
-    <Enter class="pt-5"/>
+    <Enter/>
   </div>
 </template>
 
@@ -10,7 +10,7 @@
 import Enter from '@/components/EnterComponent.vue'
 
 export default {
-  name: 'enter',
+  name: 'entertainmentView',
   components: {
     Enter
   }

@@ -10,7 +10,7 @@
 import Politics from '@/components/PoliticsComponent.vue'
 
 export default {
-  name: 'politics',
+  name: 'politicsView',
   components: {
     Politics
   }

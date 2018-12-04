@@ -1,7 +1,7 @@
 <template>
   <div class="tech">
     
-    <Tech class="pt-5"/>
+    <Tech />
   </div>
 </template>
 

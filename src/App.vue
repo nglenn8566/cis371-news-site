@@ -14,6 +14,7 @@
       <b-nav-item to="/entertainment">Entertainment</b-nav-item>
       <b-nav-item to="/sports">Sports</b-nav-item>
       <b-nav-item to="/business">Business</b-nav-item>
+      <b-nav-item to="/politics">Politics</b-nav-item>
      
     </b-navbar-nav>
 

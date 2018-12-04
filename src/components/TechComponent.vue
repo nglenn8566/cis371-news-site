@@ -41,7 +41,7 @@ const moment = require('moment')
 //*****************************************************************
     
 export default {
-  name: 'businessView',
+  name: 'techView',
   data(){
     return {
       articles: [],

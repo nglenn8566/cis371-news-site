@@ -1,7 +1,7 @@
 <template>
   <div class="home">
   
-    <create-component class="pt-5" />
+    <create-component  />
   </div>
 </template>
 
