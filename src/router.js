@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 // import Login from './views/Login.vue'
 import About from './views/About.vue'
 import Tech from './views/Tech.vue'
+import Entertainment from './views/Entertainment.vue'
 import ArticleView from './views/ArticleView.vue'
 import CreateView from './views/Create.vue'
 import EditArticle from './views/EditArticle.vue'
@@ -27,6 +28,11 @@ export default new Router({
       path: '/tech',
       name: 'tech',
       component: Tech
+    },
+    {
+      path: '/entertainment',
+      name: 'entertainment',
+      component: Entertainment
     },
     {
       path: '/article/:uid',
