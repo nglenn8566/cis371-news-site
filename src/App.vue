@@ -13,24 +13,14 @@
       <b-nav-item  to="/tech">Technology</b-nav-item>
       <b-nav-item to="/entertainment">Entertainment</b-nav-item>
       <b-nav-item to="/sports">Sports</b-nav-item>
-      <b-nav-item to="/politics">Politics</b-nav-item>
-       <!-- <b-nav-item-dropdown text="Regional News" right>
-        <b-dropdown-item to="/news/GrandRapids">Grand Rapids</b-dropdown-item>
-        <b-dropdown-item to="/news/Lansing">Lansing</b-dropdown-item>
-        <b-dropdown-item to="/news/Holland">Holland</b-dropdown-item>
-        <b-dropdown-item to="/news/Flint">Flint</b-dropdown-item>
-        <b-dropdown-item to="/news/Detroit">Detroit</b-dropdown-item>
-      </b-nav-item-dropdown> -->
+      <b-nav-item to="/business">Business</b-nav-item>
+     
     </b-navbar-nav>
 
     <!-- Right aligned nav items -->
     <b-navbar-nav class="ml-auto">
       <b-nav-form v-if="userStatus()">
       <b-button size="sm" class="mr-sm-2" variant="success" to="/create">Create Article</b-button>
-      </b-nav-form>
-      <b-nav-form>
-        <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Search"/>
-        <b-button size="sm" class="my-2 my-sm-0" type="submit" variant="dark">Search</b-button>
       </b-nav-form>
 
 
@@ -43,7 +33,7 @@
             <em>Login</em>
         </template>
         <div v-if="userStatus()">
-         <b-dropdown-item to="/edit/articles">Edit Articles</b-dropdown-item>
+         <b-dropdown-item to="/view/articles">Edit Articles</b-dropdown-item>
         <b-dropdown-item to="/profile">Profile</b-dropdown-item>
         <b-dropdown-item v-on:click="logOut()">Signout</b-dropdown-item>
           </div>
@@ -55,6 +45,7 @@
            <b-alert variant="danger" v-show="invalidCreds" >Invalid email or password.</b-alert>
 
             <b-button type="button" variant="success" class="form-control" v-on:click="loginUser()">Login</b-button>
+            <b-button type="button" variant="info" class="form-control navMarg" v-on:click="createUser()">New User</b-button>          
           </b-form>
         </div>
       
@@ -112,16 +103,23 @@ export default {
           if(error.code == 'auth/wrong-password' || error.code=='auth/user-not-found' || error.code =='auth/invalid-email' ){
             this.invalidCreds = true;
             this.loginValid = false;
-          }
-
-          
+          }    
     });
   },
   userStatus(){
     return this.loginValid
   },
   logOut(){
+    this.loginValid = false;
     firebase.auth().signOut();
+  },
+  createUser(){
+    firebase.auth().createUserWithEmailAndPassword(this.email, this.password).catch(function(error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log(errorCode);
+            console.log(errorMessage);
+        });
   }
   }
 }
@@ -148,6 +146,10 @@ html{
 
 .card{
   border: none !important;
+}
+
+.navMarg{
+  margin-top: 4px;
 }
 
 </style>

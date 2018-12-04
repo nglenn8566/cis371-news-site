@@ -10,6 +10,9 @@ import Enter from './views/Entertainment.vue'
 import Sports from './views/Sports.vue'
 import Politics from './views/Politics.vue'
 
+import EditArticle from './views/EditArticle.vue'
+import ArticleList from './views/ArticleList.vue'
+import Business from './views/Business.vue'
 
 Vue.use(Router)
 
@@ -46,9 +49,30 @@ export default new Router({
       component: Politics
     },
     {
+      path: '/business',
+      name: 'business',
+      component: Business
+    },
+    {
       path: '/article/:uid',
       name: 'articleView',
       component: ArticleView
+    },
+    {
+      path: '/edit/article/:uid',
+      name: 'editArticle',
+      component: EditArticle,
+      meta:{
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/view/articles',
+      name: 'articleList',
+      component: ArticleList,
+      meta:{
+        requiresAuth: true
+      }
     },
     {
       path: '/create',
