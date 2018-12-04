@@ -56,7 +56,6 @@ export default {
         this.userInfo = firebase.auth().currentUser;
         var atLoc = this.userInfo.email.indexOf('@')
         var authSub = this.userInfo.email.substring(0,atLoc)
-        console.log(authSub)
         this.articles =[]
      firebase.database().ref().child('userArticles').orderByChild('author').equalTo(authSub).on("value", (snap)=>{
         const snapval = snap.val()
@@ -69,7 +68,6 @@ export default {
 
     },
     deleteArticle(articleUid){
-        console.log(articleUid)
         firebase.database().ref('userArticles').child(articleUid).remove().then((response) =>{
             if(!response){
                 this.articles=[]

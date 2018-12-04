@@ -102,13 +102,7 @@ export default {
         var that = this
         that.article.urlToImage = that.file.name
 
-        firebase.storage().ref().child(that.file.name).getDownloadURL().then( async function(url){
-            console.log(url) 
-          }).catch(function(error){
-            console.log(error)
-            return error
-          })
-
+        
          that.uploadArticle(that.article)
  
       }

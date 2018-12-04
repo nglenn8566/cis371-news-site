@@ -98,7 +98,6 @@ export default {
     async uploadArticle(articleOut){
         var updates ={}
         updates['/userArticles/'+this.$route.params.uid] = articleOut
-        console.log(updates)
          firebase.database().ref().update(updates).then(function(snapshot){
     
          if(snapshot){
