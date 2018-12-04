@@ -1,7 +1,7 @@
 <template>
 <div>
 <b-container>
-  <h2 class="text-center white">Technology News</h2>
+  <h2 class="text-center white">Political News</h2>
       <div v-for="(value,key) in articles" v-bind:key="key">
     <b-row class="justify-content-md-center d-flex align-items-stretch justify-content-center pb-2">
         <div v-for="(value2,key2) in value" v-bind:key="key2">
@@ -56,7 +56,7 @@ export default {
   methods:{
     recentNews(){
       
-      var url = 'https://newsapi.org/v2/top-headlines?country=us&category=technology&' +
+      var url = 'https://newsapi.org/v2/top-headlines?sources=politico&' +
           'pageSize=9&'+
           'sortBy=popularity&' +
           'apiKey=ee1f76f3df2e4e4796b69628a5398c46';
@@ -74,13 +74,13 @@ export default {
         var currentMoment = moment();
         //this is a template for all pages to use that limit the frequencies in which articles can be posted 
        firebase.database().ref().child("timeUpdated").limitToFirst(1).once('value',function(snapshot){
-          lastTopUpdate = moment(snapshot.val().technologyArticles)
+          lastTopUpdate = moment(snapshot.val().politicArticles)
           timeDif = currentMoment.diff(lastTopUpdate,'hours',true)
           if(timeDif >= 6){
             for(var item of jsonData.articles){
-              firebase.database().ref().child("technologyArticles").push().set(item)
+              firebase.database().ref().child("politicArticles").push().set(item)
               var updates ={};
-              updates['/timeUpdated/technologyArticles'] = moment().utc().format()
+              updates['/timeUpdated/politicArticles'] = moment().utc().format()
               firebase.database().ref().update(updates)
             }
           }

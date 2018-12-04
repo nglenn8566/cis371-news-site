@@ -7,6 +7,9 @@ import Tech from './views/Tech.vue'
 import ArticleView from './views/ArticleView.vue'
 import CreateView from './views/Create.vue'
 import Enter from './views/Entertainment.vue'
+import Sports from './views/Sports.vue'
+import Politics from './views/Politics.vue'
+
 
 Vue.use(Router)
 
@@ -28,9 +31,19 @@ export default new Router({
       component: Tech
     },
     {
-      path: '/enter',
+      path: '/entertainment',
       name: 'enter',
       component: Enter
+    },
+    {
+      path: '/sports',
+      name: 'sports',
+      component: Sports
+    },
+    {
+      path: '/politics',
+      name: 'politics',
+      component: Politics
     },
     {
       path: '/article/:uid',

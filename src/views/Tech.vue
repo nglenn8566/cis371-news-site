@@ -1,7 +1,7 @@
 <template>
   <div class="tech">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <Tech />
+    
+    <Tech class="pt-5"/>
   </div>
 </template>
 
