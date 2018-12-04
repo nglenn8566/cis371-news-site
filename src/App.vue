@@ -126,8 +126,13 @@ export default {
 </script>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans|Nunito+Sans|Work+Sans');
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  // font-family: 'Work Sans', sans-serif;
+font-family: 'IBM Plex Sans', sans-serif;
+// font-family: 'Nunito Sans', sans-serif; 
+  // font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: black;
